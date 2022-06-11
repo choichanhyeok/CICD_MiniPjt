@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" /> <!-- 인터넷 익스플러러 호환성을 위한 설정-->
+    <!-- Open graph -->
+    <meta property="og:title" content="할머니의 따뜻한 사랑" />
+    <meta property="og:description" content="어여와 ..." />
+    <meta property="og:image" content="https://cdn.cashfeed.co.kr/attachments/d2befda8fc.jpg" />
+    <meta property="og:url" content="http://newscommunity-env.eba-k5nqs2it.ap-northeast-2.elasticbeanstalk.com/" />
+    <meta property="og:site_name" content="할머니의 따뜻한 사랑" />
+    <title>할머니의 따뜻한 사랑</title>
+
+    <!-- link 모음 -->
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- BootStrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Googole Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/base.css">
+    <link rel="stylesheet" href="static/style.css" />
+
+    <!-- script 모음 -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Font Awesome CSS -->
+    <script src="https://kit.fontawesome.com/f6788aacd4.js" crossorigin="anonymous"></script>
+    <!-- BootStrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+    <script src="./static/js/ui.js"></script>
+    <script src="./static/js/weather_api.js"></script>
+    <script src="./static/js/listing.js"></script>
+    <script src="../static/js/profile_about.js"></script>
+    <script>
+        {% if msg %}
+            alert("{{ msg }}")
+        {% endif %}
+    </script>
+</head>
+
+<body class="has-navbar-fixed-top">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <small class="navbar_team">TEAM.</small>
+                <div class="navbar_text">harmony</div>
+            </a>
+        </div>
+        <div class="navbar_icon">
+            {% if status == False %}
+                <a class="login_icon" onclick="window.location.href = '/login'"><i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+            {% else %}
+                <a class="profile_icon" href="/profile/{{ user_info.user_id }}"><i class="fa-regular fa-user"></i></a>
+                <a class="logout_icon" onclick="sign_out()"><i class="fa-solid fa-right-from-bracket"
+                                             aria-hidden="true"></i></a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="mytitle">
+        <div id="weather_container"></div>
+        <div class="title_content">
+            <h1>할머니는 다 들어주셔</h1>
+            <h5 class = 'grand-mothers-love'>애들이 뉴스보다 싸울수도 있지, <br>왜 댓글을 못달게혀 .. <br><br> 하고 싶은 말 다 쓰고가 우리 똥강아지 🐶</h5>
+            <button><a href="https://www.youtube.com/shorts/_EPr683g_oI" target="_blank"> 아가 기죽지마!!</a></button>
+            <button><a href="https://github.com/2022-Harmony" target="_blank"> Team about</a></button>
+        </div>
+    </div>
+
+    <div class="mycards">
+        <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                         class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">제목</h5>
+                        <p class="card-text">내용</p>
+                        <p>⭐⭐⭐</p>
+                        <p class="mycomment">나의 한줄 평을 씁니다</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-banner">
+        <ins class="kakao_ad_area" style="display:none;"
+         data-ad-unit = "DAN-Iw0hzEbLSnNtE7TJ"
+         data-ad-width = "320"
+         data-ad-height = "50"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    </div>
+</body>
+
+</html>
+

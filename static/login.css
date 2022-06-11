@@ -1,0 +1,57 @@
+body {
+    background-color: white;
+    min-height: 100vh;
+    padding-top: 3.25rem;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+button {
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+hr {
+    background-color: white;
+    height: 0.5px;
+}
+
+.hero {
+    padding-top: 30px;
+}
+
+.login-wrap {
+    background: rgba(114, 168, 110, 0.8);
+}
+
+.login-title {
+    font-weight: 800;
+    font-size: 5rem;
+}
+
+.login-subtitle {
+    font-size: 2rem;
+}
+
+.form-area {
+    width: 500px;
+    margin: auto;
+    border: #ffffff 3px dashed;
+    border-radius: 1%;
+    padding: 20px;
+}
+
+.undertexts {
+    text-align: left;
+    padding-left: 2px;
+}
+
+#undertext_id {
+    color: black
+}
+
+#undertext_pw {
+    color: black
+}
+
+#undertext_pw2 {
+    color: black
+}

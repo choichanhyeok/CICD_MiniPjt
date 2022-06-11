@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ user_info.user_id }}님의 Profile Page</title>
+    {#        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">#}
+    {#        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">#}
+    {#        <meta property="og:title" content="스위터 - 세상을 달달하게"/>#}
+    {#        <meta property="og:description" content="mini project for Web Plus"/>#}
+    {#        <meta property="og:image" content="{{ url_for('static', filename='ogimg.png') }}"/>#}
+
+    <!-- link 모음 -->
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Googole Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Do+Hyeon&family=Nanum+Gothic:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/base.css"/>
+    <link rel="stylesheet" href="/static/detail.css"/>
+    <link rel="stylesheet" href="/static/profile.css"/>
+
+
+    <!-- script 모음 -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Font Awesome CSS -->
+    <script src="https://kit.fontawesome.com/f6788aacd4.js" crossorigin="anonymous"></script>
+
+    <script src="../static/js/profile_about.js"></script>
+    <script src="../static/js/detail.js"></script>
+    <script>
+        let now_user_id = "{{ user_info.user_id }}" // 현재 profile에 접근한 user_id //
+        $(document).ready(function () {
+            // ./static/js/profile_about.js의 comments_get, user_id로 db에 검색해 작성한 댓글 리스트를 화면에 뿌려주는 역할까지
+            comments_get('{{ user_info.user_id }}')
+            var csrftoken = $('meta[name=csrf-token]').attr('content')
+            $.ajaxSetup({ // CSRF 보안 인증을 위해, 서버에게 보낼 ajax 헤더에 X-CSRFToken 값을 탑재
+                beforeSend: function (xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+<body class="has-navbar-fixed-top">
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <small class="navbar_team">TEAM.</small>
+                <div class="navbar_text">harmony</div>
+            </a>
+        </div>
+    <div class="navbar_icon">
+        {% if status == False %}
+            <a class="login_icon" onclick="window.location.href = '/login'"><i
+                    class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        {% else %}
+            <a class="profile_icon" href="/profile/{{ user_info.user_id }}"><i class="fa-regular fa-user"></i></a>
+            <a class="logout_icon" onclick="sign_out()"><i class="fa-solid fa-right-from-bracket"
+                                                           aria-hidden="true"></i></a>
+        {% endif %}
+    </div>
+</nav>
+<section class="hero is-white">
+    <div class="hero-body" style="padding-bottom:1rem;margin:auto;min-width: 400px">
+        <article class="media">
+            <figure class="media-left" style="align-self: center">
+                <a class="image is-96x96" href="#">
+                    <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
+                </a>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong style="font-weight: bold; font-size: large;">{{ user_info.nick_name }}</strong> <small style="font-size: small;"> 님의 프로필 </small>
+                        <br>
+                        {% if user_info.profile_info %}
+                            {{ user_info.profile_info }}
+                        {% else %}
+                            자기소개 좀 써주세요
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </article>
+        {% if status %}
+            <nav id="btns-me" class="level is-mobile" style="margin-top:2rem">
+                <a class="button level-item has-text-centered is-sparta" aria-label="edit"
+                   onclick='$("#modal-edit").addClass("is-active")'>
+                    프로필 수정&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                </a>
+            </nav>
+            <div class="modal" id="modal-edit">
+                <div class="modal-background" onclick='$("#modal-edit").removeClass("is-active")'></div>
+                <div class="modal-content">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="field">
+                                    <label class="label" for="input-name">이름</label>
+                                    <p class="control">
+                                        <input id="input-name" class="input" placeholder="홍길동"
+                                               value="{{ user_info.nick_name }}">
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label class="label" for="input-pic">프로필 사진</label>
+                                    <div class="control is-expanded">
+                                        <div class="file has-name field has-addons" id = 'file-with-js'>
+                                            <label class="file-label control" style="width:100%">
+                                                <input id="input-pic" class="file-input" type="file" name="resume">
+                                                <span class="file-cta"><span class="file-icon"><i
+                                                        class="fa fa-upload"></i></span>
+                                                    <span class="file-label">파일 선택</span>
+                                                </span>
+                                                <span id="file-name" class="file-name"
+                                                      style="width:100%;max-width:100%">{% if user_info.profile_pic=="profile_placeholder.png" %}
+                                                                    기본 이미지
+                                                                  {% else %}
+                                                                    {{ user_info.profile_pic }}
+                                                                  {% endif %}</span>
+                                            </label>
+                                            <p class="control">
+                                                <button class="button" onclick="to_default_img()">
+                                                  <span>삭제</span>
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label" for="textarea-about">나는 누구?</label>
+                                    <p class="control"><textarea id="textarea-about" class="textarea"
+                                                                 placeholder="자기소개하기">{{ user_info.profile_info }}</textarea>
+                                    </p>
+                                </div>
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                    </div>
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <a class="button is-sparta" onclick="update_profile()">업데이트</a>
+                                        </div>
+                                        <div class="level-item">
+                                            <a class="button is-sparta is-outlined"
+                                               onclick='$("#modal-edit").removeClass("is-active")'>취소</a>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <button class="modal-close is-large" aria-label="close"
+                        onclick='$("#modal-edit").removeClass("is-active")'></button>
+            </div>
+        {% endif %}
+    </div>
+</section>
+<div style="background-color: white; width: 100%; height: 4rem"></div>
+<div id="tabs" class="tabs is-centered is-boxed is-medium">
+    <ul style="background-color: white">
+        <li id="comments" class="is-active">
+            <a onclick="toggle_tab('comments')">
+                <span class="icon is-small"><i class="fa-solid fa-comment-dots"></i></span>
+                <span>작성 댓글</span>
+            </a>
+        </li>
+        <li id="posts">
+            <a onclick="toggle_tab('posts')">
+                <span class="icon is-small"><i class="fa-solid fa-book-bookmark"></i></span>
+                <span>북마크</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="comment-box" class="container fixed">
+</div>
+
+<div class="ad-banner">
+    <ins class="kakao_ad_area" style="display:none;"
+     data-ad-unit = "DAN-Iw0hzEbLSnNtE7TJ"
+     data-ad-width = "320"
+     data-ad-height = "50"></ins>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+</div>
+</body>
+<script>
+    // 이미지 업로드 상태 실시간 처리를 위한 js, 페이지 하단에서 벗어나지 않기를 권고
+    // Select the input element using
+    // document.querySelector
+    var input = document.querySelector(
+      "#file-with-js>.file-label>.file-input"
+    );
+
+    // Bind an listener to onChange event of the input
+    input.onchange = function () {
+        if(input.files.length > 0){
+            var fileNameContainer =
+                document.querySelector(
+                  "#file-with-js>.file-label>.file-name"
+                );
+            // set the inner text of fileNameContainer
+            // to the name of the file
+            fileNameContainer.textContent =
+              input.files[0].name;
+        }
+    }
+
+    // 이미지 삭제 후 파일 이름 기본 이미지 처리
+    const to_default_img = () => {
+            document.getElementById("input-pic").value=null;
+            var fileNameContainer =
+            document.querySelector(
+              "#file-with-js>.file-label>.file-name"
+            );
+            // set the inner text of fileNameContainer
+            // to the name of the file
+            fileNameContainer.textContent = '기본 이미지'
+    }
+
+</script>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>할머니의 따뜻한 사랑</title>
+
+    <!-- link 모음 -->
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- Googole Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Do+Hyeon&family=Nanum+Gothic:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/base.css">
+    <link rel="stylesheet" href="../static/detail.css">
+
+    <!-- script 모음 -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Font Awesome CSS -->
+    <script src="https://kit.fontawesome.com/f6788aacd4.js" crossorigin="anonymous"></script>
+
+    <script src="../static/js/ui.js"></script>
+    <script src="../static/js/weather_api.js"></script>
+    <script src="../static/js/listing.js"></script>
+    <script src="../static/js/profile_about.js"></script>
+    <script src="../static/js/detail.js"></script>
+    <script>
+        let now_post_id = "{{ post['post_id'] }}"
+        let sorting_status_eng = "new"
+        $(document).ready(function () {
+            comments_get("", now_post_id, sorting_status_eng)
+            bookmarked(now_post_id)
+            var csrftoken = $('meta[name=csrf-token]').attr('content')
+            {#var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')#}
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+
+<body class="has-navbar-fixed-top">
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <small class="navbar_team">TEAM.</small>
+            <div class="navbar_text">harmony</div>
+        </a>
+    </div>
+    <div class="navbar_icon">
+        {% if status == False %}
+            <a class="login_icon" onclick="window.location.href = '/login'"><i
+                    class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        {% else %}
+            <a class="profile_icon" href="/profile/{{ user_info.user_id }}"><i class="fa-regular fa-user"></i></a>
+            <a class="logout_icon" onclick="sign_out()"><i class="fa-solid fa-right-from-bracket"
+                                                           aria-hidden="true"></i></a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="news_wrap box fixed">
+    <div class="news_title title"><h4>{{ post.title }}</h4></div>
+    <div class="news_time level-left">
+        <small>{{ post.write_time }}</small>
+    </div>
+    <div class="news_icon level-right">
+        <div class="news_url level-item">
+            <a href="{{ post.news_url }}" target="_blank">
+                <span class="icon is-small"><i class="icon_ fa-solid fa-link"></i></span>
+            </a>
+        </div>
+        <div id="bookmark" class="bookmark level-item">
+            <div id="{{ post.post_id }}">
+                <a class="is-sparta" aria-label="bookmark"
+                   onclick="toggle_bookmark({{ post.post_id }})">
+                                                <span class="icon is-small"><i class="icon_ fa fa-solid fa-bookmark-o"
+                                                                               aria-hidden="true"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <span class="news_photo"><img src="{{ post.image_url }}" alt="Image"></span>
+    <div class="news_summary" style="white-space: pre-line">{{ post.summary|safe }}</div>
+</div>
+
+<hr class="comment_hr fixed">
+
+<div class="comment_wrap fixed">
+    <div class="control">
+        <textarea id="comment" class="textarea is-hovered" placeholder="의견을 남겨주세요 👍🏻"></textarea>
+
+        <div class="button-wrap">
+            <button class="button post_comment" onclick="post_comment()">의견 등록</button>
+        </div>
+    </div>
+</div>
+<hr class="comment_hr_second fixed">
+
+
+<section class="section">
+    <div class="comment_box_head fixed level">
+        <div class="comments_count level-left">
+            <p class="subtitle is-5">
+                <strong>{{ count_comments }}</strong>
+            </p>
+            <small style="margin-bottom: 1rem">&nbsp;comments</small>
+        </div>
+
+        <div class="dropdown is-right is-hoverable level-right">
+            <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+                    <span id="sort_comments_txt">댓글 정렬</span>
+                    <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                <div class="dropdown-content">
+                    <a class="dropdown-item" onclick="set_sorting_method(this)">
+                        최신 순
+                    </a>
+                    <a class="dropdown-item" onclick="set_sorting_method(this)">
+                        오래된 순
+                    </a>
+                    <a class="dropdown-item" onclick="set_sorting_method(this)">
+                        좋아요 순
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="comment-box" class="container fixed">
+    </div>
+</section>
+
+    <div class="ad-banner">
+        <ins class="kakao_ad_area" style="display:none;"
+         data-ad-unit = "DAN-Iw0hzEbLSnNtE7TJ"
+         data-ad-width = "320"
+         data-ad-height = "50"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    </div>
+</body>
+</html>

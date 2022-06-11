@@ -1,0 +1,101 @@
+@import "reset.css";
+body {
+    background-color: rgba(114, 168, 110, 0.8);
+    min-height: 200vh;
+    height: 100%;
+    padding-bottom: 80px;
+}
+
+.section {
+    padding: 1rem 1.5rem;
+    max-width: 750px;
+    margin: auto;
+}
+
+.navbar-brand {
+    display: flex;
+    margin-top: 5px;
+}
+
+.navbar-brand:hover {
+    text-decoration: none;
+}
+
+.navbar_team {
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 10px 0 0 10px;
+    color: #3f464d;
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+.navbar_text {
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    color: rgba(114, 168, 110, 0.8);
+    font-family: 'Rubik Mono One', sans-serif;
+    letter-spacing: 1.5px;
+}
+
+.image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar_icon {
+    display: flex;
+    flex-basis: 100px;
+    flex: 0 0 1;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.profile_icon {
+    flex-basis: 38px;
+    color: rgba(114, 168, 110, 0.8);
+    transform: scale(1.4);
+}
+
+.profile_icon:hover {
+    color: #3f464d;
+}
+
+.logout_icon {
+    flex-basis: 35px;
+    color: rgba(114, 168, 110, 0.8);
+    transform: scale(1.4);
+}
+
+.logout_icon:hover {
+    color: #3f464d;
+}
+
+.login_icon {
+    flex-basis: 30px;
+    color: rgba(114, 168, 110, 0.8);
+    transform: scale(1.4);
+}
+
+.login_icon:hover {
+    color: #3f464d;
+}
+
+.ad-banner {
+    position: fixed;
+    width: 100%;
+    margin-top: 50px;
+    bottom: -0.1rem;
+    margin: 0 auto;
+}

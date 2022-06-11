@@ -1,0 +1,78 @@
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.navbar_icon {
+    margin-top: 1px;
+}
+
+.section {
+    padding: 1rem 1.5rem;
+    max-width: 750px;
+    margin: auto;
+}
+
+.hero-body > article {
+    outline: ridge 1px rgba(169, 169, 169, 0.5);
+    padding: 20px;
+    width: 25rem;
+}
+
+.button.is-sparta {
+    background-color: rgba(114, 168, 110, 0.8);
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.button.is-sparta.is-outlined {
+    background-color: transparent;
+    border-color: rgba(114, 168, 110, 0.8);
+    color: rgba(114, 168, 110, 0.8) !important;
+}
+
+.modal-content {
+    width: 600px;
+    max-width: 80%;
+}
+
+input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.image img {
+    object-fit:cover;
+    width:100%;
+    height:100%;
+}
+
+.bookmark_post {
+    text-align: center;
+}
+
+.bookmark_post > a {
+    color: black;
+}
+
+.bookmark_post > a:hover {
+    color: #007afe;
+}
+
+#tabs {
+    margin-bottom: 3rem;
+}
+
+#tabs > ul > li > a > span {
+    color: #7f888f;
+}
+
+#tabs > ul > .is-active > a {
+    background-color: rgba(114, 168, 110, 0.8);
+}
+
+#tabs > ul > .is-active > a > span {
+    color: #2f363b;
+}
+
+.ad-banner {
+    bottom: -3px;
+}

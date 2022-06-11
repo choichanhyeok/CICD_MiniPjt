@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>할머니의 따뜻한 사랑</title>
+
+    <!-- link 모음 -->
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Googole Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Do+Hyeon&amp;display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/base.css"/>
+    <link rel="stylesheet" href="../static/login.css"/>
+
+    <!-- script 모음 -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Font Awesome CSS -->
+    <script src="https://kit.fontawesome.com/f6788aacd4.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/static/base.css"/>
+    <link rel="stylesheet" href="../static/login.css"/>
+    <script src="/static/js/login.js"></script>
+
+    <script>
+
+    </script>
+</head>
+
+<body class="has-navbar-fixed-top">
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <small class="navbar_team">TEAM.</small>
+            <div class="navbar_text">harmony</div>
+        </a>
+    </div>
+</nav>
+
+<div class="login-wrap">
+    <section class="hero is-small is-white">
+        <div class="hero-body">
+            <p class="login-title has-text-centered">
+                Harmony
+            </p>
+            <p class="login-subtitle has-text-centered">
+                광고보고싸워
+            </p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="form-area has-text-centered">
+            <div class="field has-addons" style="padding: 0; margin: 0;">
+                <input id="input_id" class="input" type="text" placeholder="아이디">
+                <div id="btn-check-dup" class="control ">
+                    <button id="double_ck" class="button is-dark is-hidden" onclick="check_dup()">중복확인</button>
+                </div>
+            </div>
+            <span id="undertext_id" class="help undertexts is-hidden" style="margin-top: 0; margin-bottom: 5px"> 아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다.</span>
+            <span id="undertext_id_loginpage" class="is-safe help undertexts"></span>
+
+
+            <div style="padding-bottom: 5px">
+                <input id="input_pw" class="input" type="password" placeholder="비밀번호">
+                <span id="undertext_pw" class="help undertexts  is-hidden"> 영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.</span>
+                <span id="undertext_pw_loginpage" class="is-safe help undertexts"></span>
+            </div>
+            <div style="padding-bottom: 5px" id="pw_ch2" class="is-hidden">
+                <input id="input_pw2" class="input " type="password" placeholder="비밀번호확인">
+                <span id="undertext_pw2" class="help undertexts" style="text-align: left; padding-left: 2px"> 비밀번호를 다시 한 번 입력해주세요.</span>
+                <span id="undertext_pw_loginpage is-danger" class=" help is-safe undertexts"></span>
+            </div>
+            <div class="signin_up_btn">
+
+                <div id="login-signup">
+                    <button class="button is-fullwidth is-dark" onclick="sign_in()">로그인</button>
+
+                    <hr>
+
+                    <span class="help">아직 회원이 아니라면</span>
+                    <div style="padding-top: 5px">
+                        <button class="button is-fullwidth" onclick="toggle_sign_up()">회원가입</button>
+                    </div>
+                </div>
+            </div>
+            <nav id="sign_up_nav" class="level is-mobile is-hidden">
+                <button class="level-item button is-dark" style="width: 40%" onclick="sign_up()">
+                    회원가입
+                </button>
+                <button class="level-item button is-outlined" style="width: 40%" onclick="toggle_sign_up()">
+                    취소
+                </button>
+            </nav>
+
+        </div>
+
+    </section>
+</div>
+<div class='ad-banner'>
+    <ins class="kakao_ad_area" style="display:none;"
+         data-ad-unit="DAN-Iw0hzEbLSnNtE7TJ"
+         data-ad-width="320"
+         data-ad-height="50"></ins>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+</div>
+
+</body>
+</html>

@@ -10,7 +10,7 @@ importlib-metadata==4.11.3
 itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.1
-PyJWT==2.3.0
+PyJWT==2.4.0
 pymongo==4.1.1
 requests==2.27.1
 soupsieve==2.3.2.post1
